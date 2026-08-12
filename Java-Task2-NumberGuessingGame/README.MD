@@ -1,4 +1,4 @@
-# 🎯 Number Guessing Game
+#  Number Guessing Game
 
 A Java Swing desktop game where the computer picks a secret number and the
 player tries to guess it, receiving "Too High!" / "Too Low!" hints until
@@ -8,20 +8,20 @@ Built as part of the **Oasis Infobyte Summer Internship Program (OIBSIP)** —
 Java Development Track, Task 2.
 
 
-## ✨ Features
+##  Features
 
-- 🎲 Random number generated at the start of every round, in the range
+-  Random number generated at the start of every round, in the range
   matching the selected difficulty
-- ⌨️ Guess entered through a `JTextField` (press **Enter** or click **Guess**)
-- 🔊 Instant feedback after every guess: **"Too High!"**, **"Too Low!"**, or
+-  Guess entered through a `JTextField` (press **Enter** or click **Guess**)
+-  Instant feedback after every guess: **"Too High!"**, **"Too Low!"**, or
   **"Correct!"**
-- 🔢 Live attempt counter, always visible during the round
-- ⛔ Maximum attempts per round — the game ends with **"You Lost!"** and
+-  Live attempt counter, always visible during the round
+-  Maximum attempts per round — the game ends with **"You Lost!"** and
   reveals the number if you run out of tries
-- 🔁 **Play Again?** prompt after every round (Yes/No)
-- 🏆 Running score/history log: `Round X — guessed in Y attempts`, with a
+-  **Play Again?** prompt after every round (Yes/No)
+-  Running score/history log: `Round X — guessed in Y attempts`, with a
   win/loss summary
-- 🎚️ **Bonus — Difficulty levels:**
+-  - **Bonus — Difficulty levels:**
   | Difficulty | Range   | Max Attempts |
   |------------|---------|--------------|
   | Easy       | 1–50    | 10           |
@@ -30,7 +30,7 @@ Java Development Track, Task 2.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Language:** Java (JDK 17+ recommended)
 - **UI:** Java Swing (custom-styled components — rounded buttons, dark
@@ -41,7 +41,7 @@ Java Development Track, Task 2.
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 ### Prerequisites
 - Java Development Kit (JDK) 17 or later installed
@@ -62,7 +62,7 @@ required.
 
 ---
 
-## 🎮 How to Play
+##  How to Play
 
 1. Pick a difficulty (**Easy**, **Medium**, or **Hard**).
 2. Click **Start New Round**.
@@ -74,7 +74,7 @@ required.
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 OIBSIP/Java-Task2-NumberGuessingGame/
@@ -85,14 +85,14 @@ OIBSIP/Java-Task2-NumberGuessingGame/
 
 ---
 
-## 👤 Author
+##  Author
 
 Mushrifa T K M
 Java Development Intern — Oasis Infobyte (OIBSIP)
 
 ---
 
-## 🙏 Acknowledgements
+##  Acknowledgements
 
 Built as Task 2 of the OIBSIP Java Development track.
 `#oasisinfobyte` `#java` `#javadevelopment` `#internship`
