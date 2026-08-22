@@ -107,7 +107,7 @@ OIBSIP/Java-Task3-ATMInterface/
 
 ## 👤 Author
 
-**[Your Full Name]**
+**Mushrifa T K M**
 Java Development Intern — Oasis Infobyte (OIBSIP)
 
 ---
