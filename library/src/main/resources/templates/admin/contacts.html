@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Messages - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">&#128218; Digital Library &middot; Admin</a>
+    <nav>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/books}">Books</a>
+        <a th:href="@{/admin/issued}">Issued Books</a>
+        <a th:href="@{/admin/members}">Members</a>
+        <a th:href="@{/admin/fines}">Fines</a>
+        <a th:href="@{/admin/contacts}">Contact Messages</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>Contact / Query Messages</h1>
+    <p class="muted">Messages submitted by members through the "Contact Us" form.</p>
+
+    <div th:each="msg : ${messages}" class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+            <strong th:text="${msg.name}"></strong>
+            <span class="muted" th:text="${#temporals.format(msg.submittedAt, 'dd MMM yyyy, HH:mm')}"></span>
+        </div>
+        <div class="muted" th:text="${msg.email}" style="margin-bottom:8px;"></div>
+        <div th:text="${msg.message}"></div>
+    </div>
+
+    <p class="empty-state" th:if="${#lists.isEmpty(messages)}">No messages have been submitted yet.</p>
+</div>
+</body>
+</html>

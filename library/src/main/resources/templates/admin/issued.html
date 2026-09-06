@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Issued Books - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">&#128218; Digital Library &middot; Admin</a>
+    <nav>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/books}">Books</a>
+        <a th:href="@{/admin/issued}">Issued Books</a>
+        <a th:href="@{/admin/members}">Members</a>
+        <a th:href="@{/admin/fines}">Fines</a>
+        <a th:href="@{/admin/contacts}">Contact Messages</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>Currently Issued Books</h1>
+    <p class="muted">Every book that has not yet been returned, across all members.</p>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Borrower</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="record : ${issues}">
+                <td th:text="${record.book.title}"></td>
+                <td th:text="${record.user.fullName} + ' (' + ${record.user.username} + ')'"></td>
+                <td th:text="${record.issueDate}"></td>
+                <td th:text="${record.dueDate}"></td>
+                <td>
+                    <span class="badge badge-danger" th:if="${record.overdue}">Overdue</span>
+                    <span class="badge badge-success" th:unless="${record.overdue}">On Time</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(issues)}">No books are currently issued.</p>
+    </div>
+</div>
+</body>
+</html>

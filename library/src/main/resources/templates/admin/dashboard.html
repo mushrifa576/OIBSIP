@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">&#128218; Digital Library &middot; Admin</a>
+    <nav>
+        <span class="user-chip" th:text="${fullName}"></span>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/books}">Books</a>
+        <a th:href="@{/admin/issued}">Issued Books</a>
+        <a th:href="@{/admin/members}">Members</a>
+        <a th:href="@{/admin/fines}">Fines</a>
+        <a th:href="@{/admin/contacts}">Contact Messages</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>Admin Dashboard</h1>
+    <p class="muted">A quick overview of the library's current state.</p>
+
+    <div class="card-grid">
+        <div class="stat">
+            <div class="value" th:text="${totalBooks}">0</div>
+            <div class="label">Book Titles in Catalogue</div>
+        </div>
+        <div class="stat">
+            <div class="value" th:text="${activeIssues}">0</div>
+            <div class="label">Books Currently Issued</div>
+        </div>
+        <div class="stat">
+            <div class="value" th:text="${totalMembers}">0</div>
+            <div class="label">Registered Members</div>
+        </div>
+        <div class="stat">
+            <div class="value" th:text="${'\u20b9' + #numbers.formatDecimal(unpaidFines, 1, 2)}">&#8377;0.00</div>
+            <div class="label">Unpaid Fines</div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+        <h2>Quick Links</h2>
+        <p><a th:href="@{/admin/books}">&#8594; Add or edit books in the catalogue</a></p>
+        <p><a th:href="@{/admin/issued}">&#8594; View all currently issued books and due dates</a></p>
+        <p><a th:href="@{/admin/members}">&#8594; View registered members</a></p>
+        <p><a th:href="@{/admin/fines}">&#8594; Manage outstanding fines</a></p>
+        <p><a th:href="@{/admin/contacts}">&#8594; Read member contact/query messages</a></p>
+    </div>
+</div>
+</body>
+</html>

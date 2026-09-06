@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="auth-wrap">
+    <div class="auth-card">
+        <h1>&#128218; Digital Library</h1>
+        <p class="subtitle">Log in to your account</p>
+
+        <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+        <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+        <form method="post" th:action="@{/login}">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <p class="auth-footer">
+            New here? <a th:href="@{/register}">Create an account</a>
+        </p>
+
+        <div class="demo-hint">
+            Demo admin: <strong>admin</strong> / <strong>admin123</strong><br>
+            Demo user: <strong>student1</strong> / <strong>pass123</strong>
+        </div>
+    </div>
+</div>
+</body>
+</html>
