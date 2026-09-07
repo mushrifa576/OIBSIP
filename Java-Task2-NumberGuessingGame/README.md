@@ -59,6 +59,7 @@ Verify Java installation:
 java -version
 javac -version
 
+----
 ## 👤 Author
 
 Mushrifa T K M
