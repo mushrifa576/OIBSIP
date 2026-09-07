@@ -88,22 +88,6 @@ accounts' balances update.
 > **Note:** Balances and transaction history reset every time you restart
 > the program — this is an in-memory simulation for a single session, per
 > the task's "current session" requirement.
-
----
-
-## 📁 Project Structure
-
-```
-OIBSIP/Java-Task3-ATMInterface/
-├── Main.java
-├── ATM.java
-├── Bank.java
-├── Account.java
-├── Transaction.java
-├── README.md
-└── screenshot.png   (add before submitting)
-```
-
 ---
 
 ## 👤 Author
