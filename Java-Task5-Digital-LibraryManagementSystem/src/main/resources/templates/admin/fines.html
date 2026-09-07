@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fine Management - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">&#128218; Digital Library &middot; Admin</a>
+    <nav>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/books}">Books</a>
+        <a th:href="@{/admin/issued}">Issued Books</a>
+        <a th:href="@{/admin/members}">Members</a>
+        <a th:href="@{/admin/fines}">Fines</a>
+        <a th:href="@{/admin/contacts}">Contact Messages</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>Fine Management</h1>
+    <p class="muted">Every overdue return that incurred a fine (&#8377;5/day late), across all members.</p>
+
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Member</th>
+                <th>Book</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Fine</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="record : ${fines}">
+                <td th:text="${record.user.fullName}"></td>
+                <td th:text="${record.book.title}"></td>
+                <td th:text="${record.dueDate}"></td>
+                <td th:text="${record.returnDate}"></td>
+                <td th:text="${'\u20b9' + #numbers.formatDecimal(record.fineAmount, 1, 2)}"></td>
+                <td>
+                    <span class="badge badge-success" th:if="${record.finePaid}">Paid</span>
+                    <span class="badge badge-danger" th:unless="${record.finePaid}">Unpaid</span>
+                </td>
+                <td>
+                    <form th:action="@{/admin/fines/pay/{id}(id=${record.id})}" method="post" th:if="${!record.finePaid}">
+                        <button type="submit" class="btn btn-primary btn-small">Mark as Paid</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(fines)}">No fines have been charged yet.</p>
+    </div>
+</div>
+</body>
+</html>
