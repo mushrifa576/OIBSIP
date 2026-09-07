@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Books - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">&#128218; Digital Library &middot; Admin</a>
+    <nav>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/books}">Books</a>
+        <a th:href="@{/admin/issued}">Issued Books</a>
+        <a th:href="@{/admin/members}">Members</a>
+        <a th:href="@{/admin/fines}">Fines</a>
+        <a th:href="@{/admin/contacts}">Contact Messages</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>Manage Books</h1>
+
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <!-- Add / Edit form. If "editingBook" is set, this becomes an edit form for that book. -->
+    <div class="card">
+        <h2 th:text="${editingBook != null} ? 'Edit Book' : 'Add New Book'">Add New Book</h2>
+
+        <form method="post"
+              th:action="${editingBook != null} ? @{/admin/books/update/{id}(id=${editingBook.id})} : @{/admin/books/add}">
+            <div class="form-row">
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" th:value="${editingBook != null} ? ${editingBook.title} : ''" required>
+                </div>
+                <div>
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" th:value="${editingBook != null} ? ${editingBook.author} : ''" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label for="isbn">ISBN</label>
+                    <input type="text" id="isbn" name="isbn" th:value="${editingBook != null} ? ${editingBook.isbn} : ''" required>
+                </div>
+                <div>
+                    <label for="category">Category</label>
+                    <input type="text" id="category" name="category" th:value="${editingBook != null} ? ${editingBook.category} : ''" required>
+                </div>
+                <div>
+                    <label for="quantity">Total Quantity</label>
+                    <input type="number" id="quantity" name="quantity" min="1"
+                           th:value="${editingBook != null} ? ${editingBook.totalQuantity} : 1" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                    th:text="${editingBook != null} ? 'Save Changes' : 'Add Book'">Add Book</button>
+            <a th:if="${editingBook != null}" th:href="@{/admin/books}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <!-- Book list -->
+    <div class="card">
+        <h2>Catalogue (<span th:text="${#lists.size(books)}">0</span> titles)</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Category</th>
+                <th>Available / Total</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.isbn}"></td>
+                <td th:text="${book.category}"></td>
+                <td th:text="${book.availableQuantity} + ' / ' + ${book.totalQuantity}"></td>
+                <td>
+                    <a th:href="@{/admin/books(editId=${book.id})}" class="btn btn-secondary btn-small">Edit</a>
+                    <form th:action="@{/admin/books/delete/{id}(id=${book.id})}" method="post" style="display:inline;"
+                          onsubmit="return confirm('Delete this book? This cannot be undone.');">
+                        <button type="submit" class="btn btn-danger btn-small">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(books)}">No books in the catalogue yet.</p>
+    </div>
+</div>
+</body>
+</html>
