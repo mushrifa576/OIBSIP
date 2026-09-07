@@ -76,18 +76,6 @@ java OnlineExaminationSystem
 The exam bank has 10 Java-fundamentals multiple-choice questions with a
 30-minute timer.
 
----
-
-## 📁 Project Structure
-
-```
-OIBSIP/Java-Task4-OnlineExaminationSystem/
-├── OnlineExaminationSystem.java
-├── README.md
-└── screenshot.png   (add before submitting)
-```
-
----
 
 ## 👤 Author
 
