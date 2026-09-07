@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Catalogue - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/user/dashboard}">&#128218; Digital Library</a>
+    <nav>
+        <a th:href="@{/user/dashboard}">Dashboard</a>
+        <a th:href="@{/user/catalogue}">Catalogue</a>
+        <a th:href="@{/user/mybooks}">My Books</a>
+        <a th:href="@{/user/reservations}">My Reservations</a>
+        <a th:href="@{/user/contact}">Contact Us</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>Book Catalogue</h1>
+
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <div class="card">
+        <div class="form-row">
+            <div>
+                <form method="get" th:action="@{/user/catalogue}">
+                    <label for="search">Search by title or author</label>
+                    <input type="search" id="search" name="search" th:value="${searchTerm}" placeholder="e.g. Orwell, or 1984">
+                    <button type="submit" class="btn btn-primary btn-small" style="margin-top:8px;">Search</button>
+                </form>
+            </div>
+            <div>
+                <form method="get" th:action="@{/user/catalogue}">
+                    <label for="category">Browse by category</label>
+                    <select id="category" name="category" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"
+                                th:selected="${cat == selectedCategory}"></option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Availability</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.category}"></td>
+                <td>
+                    <span class="badge badge-success" th:if="${book.availableQuantity > 0}"
+                          th:text="${book.availableQuantity} + ' available'"></span>
+                    <span class="badge badge-danger" th:unless="${book.availableQuantity > 0}">All copies issued</span>
+                </td>
+                <td>
+                    <form th:if="${book.availableQuantity > 0}" th:action="@{/user/issue/{id}(id=${book.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-primary btn-small">Issue</button>
+                    </form>
+                    <form th:unless="${book.availableQuantity > 0}" th:action="@{/user/reserve/{id}(id=${book.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-secondary btn-small">Reserve</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(books)}">No books match your search.</p>
+    </div>
+</div>
+</body>
+</html>
