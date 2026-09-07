@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/user/dashboard}">&#128218; Digital Library</a>
+    <nav>
+        <span class="user-chip" th:text="${fullName}"></span>
+        <a th:href="@{/user/dashboard}">Dashboard</a>
+        <a th:href="@{/user/catalogue}">Catalogue</a>
+        <a th:href="@{/user/mybooks}">My Books</a>
+        <a th:href="@{/user/reservations}">My Reservations</a>
+        <a th:href="@{/user/contact}">Contact Us</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1 th:text="'Welcome back, ' + ${fullName} + '!'">Welcome back!</h1>
+
+    <div class="card-grid">
+        <div class="stat">
+            <div class="value" th:text="${activeIssuesCount}">0</div>
+            <div class="label">Books Currently Issued to You</div>
+        </div>
+        <div class="stat">
+            <div class="value" th:text="${reservationsCount}">0</div>
+            <div class="label">Reservations Placed</div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+        <h2>Quick Links</h2>
+        <p><a th:href="@{/user/catalogue}">&#8594; Browse or search the book catalogue</a></p>
+        <p><a th:href="@{/user/mybooks}">&#8594; View your issued books and return one</a></p>
+        <p><a th:href="@{/user/reservations}">&#8594; Check your advance bookings</a></p>
+        <p><a th:href="@{/user/contact}">&#8594; Send a question to the library admin</a></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Books - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/user/dashboard}">&#128218; Digital Library</a>
+    <nav>
+        <a th:href="@{/user/dashboard}">Dashboard</a>
+        <a th:href="@{/user/catalogue}">Catalogue</a>
+        <a th:href="@{/user/mybooks}">My Books</a>
+        <a th:href="@{/user/reservations}">My Reservations</a>
+        <a th:href="@{/user/contact}">Contact Us</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>My Books</h1>
+
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <div class="card">
+        <h2>Currently Issued</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="record : ${activeIssues}">
+                <td th:text="${record.book.title}"></td>
+                <td th:text="${record.issueDate}"></td>
+                <td th:text="${record.dueDate}"></td>
+                <td>
+                    <span class="badge badge-danger" th:if="${record.overdue}">Overdue</span>
+                    <span class="badge badge-success" th:unless="${record.overdue}">On Time</span>
+                </td>
+                <td>
+                    <form th:action="@{/user/return/{id}(id=${record.id})}" method="post">
+                        <button type="submit" class="btn btn-primary btn-small">Return</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(activeIssues)}">You don't have any books checked out right now.</p>
+    </div>
+
+    <div class="card">
+        <h2>History</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Issue Date</th>
+                <th>Return Date</th>
+                <th>Fine</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="record : ${history}" th:if="${record.returned}">
+                <td th:text="${record.book.title}"></td>
+                <td th:text="${record.issueDate}"></td>
+                <td th:text="${record.returnDate}"></td>
+                <td>
+                    <span th:if="${record.fineAmount > 0}" th:text="${'\u20b9' + #numbers.formatDecimal(record.fineAmount, 1, 2)}" style="margin-right:6px;"></span>
+                    <span th:if="${record.fineAmount > 0 and record.finePaid}" class="badge badge-success">Paid</span>
+                    <span th:if="${record.fineAmount > 0 and !record.finePaid}" class="badge badge-danger">Unpaid</span>
+                    <span th:unless="${record.fineAmount > 0}" class="muted">None</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(history)}">No past borrowing history yet.</p>
+    </div>
+</div>
+</body>
+</html>

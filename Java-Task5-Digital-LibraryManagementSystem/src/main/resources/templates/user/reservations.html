@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reservations - Digital Library</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="brand" th:href="@{/user/dashboard}">&#128218; Digital Library</a>
+    <nav>
+        <a th:href="@{/user/dashboard}">Dashboard</a>
+        <a th:href="@{/user/catalogue}">Catalogue</a>
+        <a th:href="@{/user/mybooks}">My Books</a>
+        <a th:href="@{/user/reservations}">My Reservations</a>
+        <a th:href="@{/user/contact}">Contact Us</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="page">
+    <h1>My Reservations</h1>
+    <p class="muted">Advance bookings you've placed on books that had no copies available at the time.</p>
+
+    <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Reserved On</th>
+                <th>Status</th>
+                <th>Availability Now</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="res : ${reservations}">
+                <td th:text="${res.book.title}"></td>
+                <td th:text="${res.reservationDate}"></td>
+                <td>
+                    <span class="badge badge-warn" th:if="${res.status.name() == 'PENDING'}">Pending</span>
+                    <span class="badge badge-muted" th:if="${res.status.name() == 'CANCELLED'}">Cancelled</span>
+                </td>
+                <td>
+                    <span class="badge badge-success" th:if="${res.book.availableQuantity > 0}">
+                        Available now - visit the catalogue!
+                    </span>
+                    <span class="muted" th:unless="${res.book.availableQuantity > 0}">Still checked out</span>
+                </td>
+                <td>
+                    <form th:if="${res.status.name() == 'PENDING'}" th:action="@{/user/reservations/cancel/{id}(id=${res.id})}" method="post">
+                        <button type="submit" class="btn btn-secondary btn-small">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="empty-state" th:if="${#lists.isEmpty(reservations)}">You haven't reserved any books yet.</p>
+    </div>
+</div>
+</body>
+</html>
